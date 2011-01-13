@@ -6,7 +6,7 @@ class UploadAssetMessage
 
   def initialize
     @asset_id = Random.new.rand(1..10000)
-    @type = "asset.upload"
+    @type = :asset_upload
   end
 end
 
