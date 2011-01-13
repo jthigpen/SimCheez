@@ -11,7 +11,7 @@ AMQP.start(:host => 'localhost') do
   end
 
   EM.add_periodic_timer(1){
-    msg = UploadAssetMessage.new(random_asset_id)
+    msg = AssetUploadedMessage.new(random_asset_id)
     puts "Publishing Image #{msg.asset_id}"
     publish_message msg
   }

@@ -29,12 +29,12 @@ end
 class AssetCreatedMessage < AssetMessage
 end
 
-class UploadAssetMessage < AssetMessage
+class AssetUploadedMessage < AssetMessage
 end
 
 class MessageHandler 
   def handle(msg)
-    #puts "Handling #{msg}"
+    puts "Handling #{msg}"
     self.send(msg.type, msg) if self.respond_to? msg.type
   end
 
