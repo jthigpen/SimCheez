@@ -10,11 +10,12 @@ class UploadAssetMessage
   end
 end
 
-def consume_messages
+def start_consuming_messages(message_handler)
   AMQP.start(:host => 'localhost' ) do
    q = MQ.new.queue('tasks')
    q.subscribe do |msg|
-     yield Marshal.load(msg)
+    marshalled_message = Marshal.load(msg)
+    message_handler.handle(marshalled_message)
    end
   end
 end
