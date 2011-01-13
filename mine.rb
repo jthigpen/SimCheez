@@ -3,16 +3,26 @@ load './simcheez.rb'
 
 class MineMessageHandler < MessageHandler
   def asset_uploaded(msg)
-    puts "Asset Uploaded: #{msg.asset_id}"
-    publish AssetCreatedMessage.new(msg.asset_id)
+    puts "Saving Asset To Database: #{msg.asset_id}"
+    publish(AssetCreatedMessage.new(msg.asset_id), "moderation")
   end
 
   def asset_approved(msg)
-    puts "Asset #{msg.asset_id} Approved for Voting!"
+    update_asset(msg.asset_id, "Approved")
+    publish(PublishToVotingMessage.new(msg.asset_id), 'publication')
   end
 
   def asset_denied(msg)
-    puts "Asset #{msg.asset_id} Denied! REJECTED!!"
+    update_asset(msg.asset_id, "Denied")
+  end
+
+  def asset_featured(msg)
+    update_asset(msg.asset_id, "Featured")
+    publish(PublishToFrontPageMessage.new(msg.asset_id), 'publication')
+  end
+
+  def update_asset(asset_id, state)
+    puts "Updating Asset #{asset_id} to #{state}"
   end
 end
 

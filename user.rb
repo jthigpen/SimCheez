@@ -1,18 +1,17 @@
 require 'rubygems'
 require './simcheez.rb'
 
-def random_asset_id
-  Random.new.rand(1..10000)
-end
+message_id = 1
 
 AMQP.start(:host => 'localhost') do
   def publish_message(msg)
-    MQ.queue('tasks').publish(Marshal.dump(msg))
+    MQ.queue('tasks', {:durable => true}).publish(Marshal.dump(msg))
   end
 
-  EM.add_periodic_timer(1){
-    msg = AssetUploadedMessage.new(random_asset_id)
+  EM.add_periodic_timer(0.25){
+    msg = AssetUploadedMessage.new(message_id)
     puts "Publishing Image #{msg.asset_id}"
     publish_message msg
+    message_id = message_id + 1
   }
 end
