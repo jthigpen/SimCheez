@@ -1,15 +1,8 @@
 require 'rubygems'
-require './simcheez'
-
-def publish_message(message)
-  AMQP.start(:host => 'localhost' ) do
-    q = MQ.new.queue('tasks')
-    q.publish(message)
-  end
-end
+require './simcheez.rb'
 
 AMQP.start(:host => 'localhost') do
-  def publish(msg)
+  def publish_message(msg)
     MQ.queue('tasks').publish(Marshal.dump(msg))
   end
 

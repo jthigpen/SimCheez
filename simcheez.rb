@@ -13,7 +13,7 @@
     end
   end
 
-  class UploadedAssetMessage < AssetMessage
+  class UploadAssetMessage < AssetMessage
     def initialize
       @asset_id = Random.new.rand(1..10000)
       @type = :asset_upload
@@ -41,6 +41,6 @@
     end
     
     def publish(message)
-      @q.publish(message)
+      @q.publish(Marshal.dump(message))
     end
   end
