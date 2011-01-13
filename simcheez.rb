@@ -32,6 +32,12 @@ end
 class AssetUploadedMessage < AssetMessage
 end
 
+class AssetDeniedMessage < AssetMessage
+end
+
+class AssetApprovedMessage < AssetMessage
+end
+
 class MessageHandler 
   def handle(msg)
     puts "Handling #{msg}"
