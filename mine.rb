@@ -2,7 +2,7 @@ require 'rubygems'
 load './simcheez.rb'
 
 class MineMessageHandler < MessageHandler
-  def asset_upload(msg)
+  def asset_uploaded(msg)
     puts "Asset Uploaded: #{msg.asset_id}"
     publish AssetCreatedMessage.new(msg.asset_id)
   end
